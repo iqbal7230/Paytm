@@ -13,9 +13,9 @@ const signupBody = zod.object({
 	lastName: zod.string(),
 	password: zod.string()
 })
-router.get('/test', (req, res) => {
-    res.send('User router is working');
-});
+// router.get('/test', (req, res) => {
+//     res.send('User router is working');
+// });
 
 router.post("/signup", async (req, res) => {
     console.log("Received request:", req.body); 
@@ -69,7 +69,7 @@ const signinBody = zod.object({
 router.post("/signin", async (req, res) => {
     const { success } = signinBody.safeParse(req.body)
     if (!success) {
-        return res.status(411).json({
+        return res.status(400).json({
             message: "Email already taken / Incorrect inputs"
         })
     }
@@ -91,7 +91,7 @@ router.post("/signin", async (req, res) => {
     }
 
     
-    res.status(411).json({
+    res.status(401).json({
         message: "Error while logging in"
     })
 })
