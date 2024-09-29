@@ -11,8 +11,8 @@ Paymate is a user-friendly payment application that allows users to create accou
 
 ## Screenshot
 ![alt text](<frontend/img/Screenshot (313).png>)
-![alt text](<frontend/img/Screenshot (314).png>)
 ![alt text](<frontend/img/Screenshot (316).png>)
+![alt text](<frontend/img/Screenshot (314).png>)
 ![alt text](<frontend/img/Screenshot (317).png>)
 
 
@@ -35,8 +35,8 @@ Paymate is a user-friendly payment application that allows users to create accou
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/your-username/paymate.git
-    cd paymate
+    git clone https://github.com/iqbal7230/Paytm.git
+    cd paytm
     ```
 
 2. **Install dependencies for the backend**:
