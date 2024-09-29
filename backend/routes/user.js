@@ -4,9 +4,11 @@ const router = express.Router();
 const zod = require("zod");
 const { User, Account } = require("../db");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config");
+// const { JWT_SECRET } = require("../config");
 const  { authMiddleware } = require("../Middleware");
+const bcrypt = require('bcrypt');
 
+const JWT_SECRET =  '1234567';
 const signupBody = zod.object({
     username: zod.string().email(),
 	firstName: zod.string(),
@@ -67,34 +69,47 @@ const signinBody = zod.object({
 })
 
 router.post("/signin", async (req, res) => {
-    const { success } = signinBody.safeParse(req.body)
-    if (!success) {
-        return res.status(400).json({
-            message: "Email already taken / Incorrect inputs"
-        })
-    }
-
-    const user = await User.findOne({
-        username: req.body.username,
-        password: req.body.password
-    });
-
-    if (user) {
-        const token = jwt.sign({
-            userId: user._id
-        }, JWT_SECRET);
+    try {
+      // Validate the request body
+      signinBody.parse(req.body);
   
-        res.json({
-            token: token
-        })
-        return;
+      // Find the user by username (email)
+      const user = await User.findOne({ username: req.body.username });
+      if (!user) {
+        return res.status(401).json({
+          message: "User not found",
+        });
+      }
+  
+      // Check if the password is correct
+      const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({
+          message: "Invalid credentials",
+        });
+      }
+  
+      // Generate JWT token
+      const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+        expiresIn: "1h",
+      });
+  
+      // Send the token to the client
+      res.json({ token });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Handle validation errors from Zod
+        return res.status(400).json({
+          message: error.errors.map(err => err.message).join(", "),
+        });
+      }
+  
+      console.error("Server error:", error);
+      res.status(500).json({
+        message: "Server configuration error: " + error.message,
+      });
     }
-
-    
-    res.status(401).json({
-        message: "Error while logging in"
-    })
-})
+  });
 
 const updateBody = zod.object({
 	password: zod.string().optional(),
