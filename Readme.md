@@ -15,11 +15,12 @@ Paymate is a user-friendly payment application that allows users to create accou
 ![alt text](<frontend/img/Screenshot (316).png>)
 ![alt text](<frontend/img/Screenshot (317).png>)
 
+
 ## Tech Stack
 
 - **Frontend**: React.js, Tailwind CSS
-- **Backend**: Node.js, Express.js (optional, depending on your architecture)
-- **Database**: MongoDB (optional, depending on your architecture)
+- **Backend**: Node.js, Express.js 
+- **Database**: MongoDB 
 - **Authentication**: JWT (JSON Web Token) for secure authentication
 
 ## Getting Started
@@ -33,6 +34,49 @@ Paymate is a user-friendly payment application that allows users to create accou
 
 1. **Clone the repository**:
 
-   ```bash
-   git clone https://github.com/your-username/paymate.git
-   cd paymate
+    ```bash
+    git clone https://github.com/your-username/paymate.git
+    cd paymate
+    ```
+
+2. **Install dependencies for the backend**:
+
+    ```bash
+    cd backend
+    npm install
+    ```
+
+3. **Install dependencies for the frontend**:
+
+    ```bash
+    cd ../frontend
+    npm install
+    ```
+
+4. **Set up environment variables**:
+
+    Create a `.env` file in the `backend` directory and add the following:
+
+    ```
+    MONGO_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret
+    ```
+
+5. **Run the backend server**:
+
+    ```bash
+    cd backend
+    npm start
+    ```
+
+6. **Run the frontend development server**:
+
+    ```bash
+    cd ../frontend
+    npm start
+    ```
+
+7. **Open your browser**:
+
+    Navigate to `http://localhost:3000` to see the application running.
+
